@@ -14,10 +14,12 @@
         <input type="number" name="quantidade" />
         <input type="text" name="item">
         <input type="submit" />
-        
+
     </form>
     <br>
-    <button id=limpar>Limpa a lista</button>
+    <button id=Btnlimpar>Limpa a lista</button>
+    <hi>Itens: <span id="total"></span></hi>
+    <hi>Itens: <span id="conta"></span></hi>
     <ul>
 
     </ul>
@@ -26,13 +28,14 @@
         var listaCompras = [];
         var lista = document.getElementsByTagName("ul")[0];
         var botaoLimpar = document.querySelector("#limpa");
-        
+        var liTotal = document.getElementById("total");
+        liTotal.textContent = lista.children.length;
+
         document.forms.listaCompra.addEventListener("submit", processaEnvio);
-        botaoLimpar.addEventListener("click", limpaLista)
+        Btnlimpar.addEventListener("click", limpaLista);
 
 
-        function processaEnvio(e) 
-        {
+        function processaEnvio(e) {
             e.preventDefault();
             console.log("Formulário enviado!");
 
@@ -46,13 +49,31 @@
             var novoLi = document.createElement("li");
             novoLi.textContent = novaCompra.quantidade + " - " + novaCompra.item;
             lista.appendChild(novoLi);
+            liTotal.textContent = lista.children.length;
             document.forms.listaCompra.reset();
             document.forms.listaCompra.quantidade.focus();
+            liconta.textContent = lista.childElementCount;
         }
 
-        function limpaLista()
-        {
-            document.lista = 0;
+        var liconta = document.getElementById("conta");
+
+
+        var itens = lista.getElementsByTagName('li');
+        var i = Number(lista.childElementCount);
+
+
+        function limpaLista() {
+            
+            i = Number(lista.childElementCount);
+           
+            while (i > 0) 
+            {
+                lista.removeChild(itens[0]);
+                i--;
+                liconta.textContent = i;
+            }
+
+
         }
 
     </script>
