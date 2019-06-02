@@ -1,46 +1,58 @@
 <!DOCTYPE html>
-<html >
+<html>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Lista de Compras</title>
 </head>
+
 <body>
     <h1>Lista de Compras</h1>
-    
-    <form nome="listaCompras" method="POST">
-    <input type="number" name="quantidade">
-    <input type="text" name="item"/>
-    <input type="submit" />
-    <input type="reset" />
+
+    <form name="listaCompra" method="POST">
+        <input type="number" name="quantidade" />
+        <input type="text" name="item">
+        <input type="submit" />
+        
     </form>
+    <br>
+    <button id=limpar>Limpa a lista</button>
     <ul>
+
     </ul>
-    
+
     <script>
-        var listaCompra = [];
+        var listaCompras = [];
         var lista = document.getElementsByTagName("ul")[0];
+        var botaoLimpar = document.querySelector("#limpa");
+        
+        document.forms.listaCompra.addEventListener("submit", processaEnvio);
+        botaoLimpar.addEventListener("click", limpaLista)
 
-        document.forms.listaCompras.addEventListener("submit", processaEnvio);
 
-
-        function processaEnvio(e) {
+        function processaEnvio(e) 
         {
-                e.preventDefault();
-                console.log("Formulário enviado!");
+            e.preventDefault();
+            console.log("Formulário enviado!");
 
-                var quantidade = document.forms.listaCompra.quantidade.value;
-                var item = Number(document.forms.listaCompra.item.value);
-                console.log(quantidade, item);
+            var quantidade = Number(document.forms.listaCompra.quantidade.value);
+            var item = document.forms.listaCompra.item.value;
+            console.log(quantidade, item);
 
-                var novaCompra = { "quantidade": quantidade, "item": item };
-                listaCompras.push(novaCompra);
+            var novaCompra = { "quantidade": quantidade, "item": item };
+            listaCompras.push(novaCompra);
 
-                var novoLi = document.createElement("li");
-                novoLi.textContent = novaCompra.quantidade + " - " + novaCompra.item;
-                lista.appendChild(novoLi);
-                document.forms.listaCompra.reset();
-                document.forms.listaCompra.item.focus();
+            var novoLi = document.createElement("li");
+            novoLi.textContent = novaCompra.quantidade + " - " + novaCompra.item;
+            lista.appendChild(novoLi);
+            document.forms.listaCompra.reset();
+            document.forms.listaCompra.quantidade.focus();
+        }
+
+        function limpaLista()
+        {
+            document.lista = 0;
         }
 
     </script>
@@ -48,4 +60,5 @@
 
 
 </body>
+
 </html>
