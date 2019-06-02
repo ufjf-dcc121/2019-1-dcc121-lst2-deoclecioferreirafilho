@@ -2,42 +2,46 @@
 <html >
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Lista de Compras</title>
 </head>
 <body>
-    <form nome="listaCompras" method="POST"><br>
-    <div><label>Quantidade <input type="number" name="quantidade"/></label></div><br>
-    <div><label>Item                <input type="text" name="item"/></label></div><br>
+    <h1>Lista de Compras</h1>
+    
+    <form nome="listaCompras" method="POST">
+    <input type="number" name="quantidade">
+    <input type="text" name="item"/>
     <input type="submit" />
     <input type="reset" />
     </form>
-        <ul>
-        
-        </ul>
+    <ul>
+    </ul>
     
     <script>
-        var listaCompras = [];
+        var listaCompra = [];
         var lista = document.getElementsByTagName("ul")[0];
 
-        document.forms.listaCompras.addEventListener("submit", envia);
+        document.forms.listaCompras.addEventListener("submit", processaEnvio);
 
-        function envia(e) {
+
+        function processaEnvio(e) {
+        {
                 e.preventDefault();
                 console.log("Formulário enviado!");
 
-                var quantidade = document.forms.listaCompras.quantidade.value;
-                var item = Number(document.forms.listaCompras.item.value);
+                var quantidade = document.forms.listaCompra.quantidade.value;
+                var item = Number(document.forms.listaCompra.item.value);
                 console.log(quantidade, item);
 
-                var novaCompra = { "qantidade": quantidade, "item": item };
+                var novaCompra = { "quantidade": quantidade, "item": item };
                 listaCompras.push(novaCompra);
 
                 var novoLi = document.createElement("li");
                 novoLi.textContent = novaCompra.quantidade + " - " + novaCompra.item;
                 lista.appendChild(novoLi);
-                document.forms.listaCompras.reset();
-                document.forms.listaCompras.item.focus();
-            }
+                document.forms.listaCompra.reset();
+                document.forms.listaCompra.item.focus();
+        }
 
     </script>
 
