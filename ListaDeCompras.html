@@ -19,17 +19,21 @@
     <br>
     <button id=Btnlimpar>Limpa a lista</button>
     <hi>Itens: <span id="total"></span></hi>
-    <hi>Itenvar itens = lista.getElementsByTagName('li');pan id="conta"></span></hi>
+
     <ul>
 
     </ul>
 
-    <script>var itens = lista.getElementsByTagName('li');
+    <script>
+
         var listaCompras = [];
         var lista = document.getElementsByTagName("ul")[0];
         var botaoLimpar = document.querySelector("#limpa");
         var liTotal = document.getElementById("total");
         liTotal.textContent = lista.children.length;
+        var itens = lista.getElementsByTagName('li');
+        var i = Number(lista.childElementCount);
+        total.textContent = i;
 
         document.forms.listaCompra.addEventListener("submit", processaEnvio);
         Btnlimpar.addEventListener("click", limpaLista);
@@ -52,33 +56,22 @@
             liTotal.textContent = lista.children.length;
             document.forms.listaCompra.reset();
             document.forms.listaCompra.quantidade.focus();
-            liconta.textContent = lista.childElementCount;
+
         }
 
-        var liconta = document.getElementById("conta");
-
-
-        var itens = lista.getElementsByTagName('li');
-        var i = Number(lista.childElementCount);
-
-
         function limpaLista() {
-            
+
             i = Number(lista.childElementCount);
-           
-            while (i > 0) 
-            {
+
+            while (i > 0) {
                 lista.removeChild(itens[0]);
                 i--;
-                liconta.textContent = i;
+                total.textContent = i;
             }
-
 
         }
 
     </script>
-
-
 
 </body>
 

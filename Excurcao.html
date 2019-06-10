@@ -5,17 +5,84 @@
     <title>Excurção</title>
 </head>
 <body>
-    
-<h1>Lista de Compras</h1>
-
+<br><br>
 <form name="excurcao" method="POST">
-    <label "Nome: " ><input type="text" name="Nome"></label><br>
-    <label "Idade: "><input type="number" name="idade" /></label><br>
+    <label> Nome:  <input type="text"  name="nome"></label><br><br>
+    <label> Idade: <input type="number"  name="idade" /></label><br><br>
     
     <input type="submit" />
 
 </form>
 
 
+
+<h3><b>Adulto - <span id="tAdulto"></span></b></h3>
+
+
+<ul1>
+
+</ul1>
+
+<br><br>
+
+
+<h3><b>Estudante - <span id="tEstudante"></span></b></h3>
+<ul2>
+
+</ul2>
+<br>
+<h3><b>Total inscritos: <span id="total"> </span></b></h3>
+
+<script>
+    var listaNomes= [];
+    var lista1 = document.getElementsByTagName("ul1")[0];
+    var lista2 = document.getElementsByTagName("ul2")[0];
+
+    var botaoLimpar = document.querySelector("#limpa");
+    var liTotal = document.getElementById("total");
+    var liAdulto = document.getElementById("tAdulto");
+    var liEstudante = document.getElementById("tEstudante");
+    
+    liAdulto.textContent = lista1.children.length;
+    liEstudante.textContent = lista2.children.length;
+    liTotal.textContent = lista1.childElementCount + lista2.childElementCount;
+    
+
+    var itens = lista1.getElementsByTagName('li');
+    var i = Number(lista1.childElementCount);
+    document.forms.excurcao.addEventListener("submit", enviar);
+
+    function enviar(e){
+        e.preventDefault();
+        console.log("Formulário enviado!");
+
+        var nome = document.forms.excurcao.nome.value;
+        var idade = Number(document.forms.excurcao.idade.value);
+        console.log(nome, idade);
+
+        var novaLista = { "nome": nome, "idade": idade };
+        listaNomes.push(novaLista);
+
+        var novoLi = document.createElement("li");
+        novoLi.textContent = novaLista.nome + " - " + novaLista.idade;
+
+        if(idade >= 18){
+            lista1.appendChild(novoLi);
+            liAdulto.textContent = lista1.children.length;
+        }else{
+            lista2.appendChild(novoLi);
+            liEstudante.textContent = lista2.children.length; 
+        }
+
+        liTotal.textContent = lista1.childElementCount + lista2.childElementCount;
+        document.forms.excurcao.reset();
+        document.forms.excurcao.nome.focus();
+        
+    }
+
+
+            
+
+</script>
 </body>
 </html>
