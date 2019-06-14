@@ -6,51 +6,62 @@
 </head>
 <body>
 <br><br>
-<form name="excurcao" method="POST">
+<form name="excurcao"  method="POST">
     <label> Nome:  <input type="text"  name="nome"></label><br><br>
     <label> Idade: <input type="number"  name="idade" /></label><br><br>
     
     <input type="submit" />
-
+    <button type="button" title="Editar" id=btnEdit disabled = "true"> Editar</button>
 </form>
+<br>
 
-
+        
+<!--Listas-->
 
 <h3><b>Adulto - <span id="tAdulto"></span></b></h3>
-
-
 <ul1>
-
 </ul1>
-
 <br><br>
-
-
 <h3><b>Estudante - <span id="tEstudante"></span></b></h3>
 <ul2>
-
 </ul2>
 <br>
 <h3><b>Total inscritos: <span id="total"> </span></b></h3>
 
 <script>
+
+    // Declaração das Variáveis //
     var listaNomes= [];
     var lista1 = document.getElementsByTagName("ul1")[0];
     var lista2 = document.getElementsByTagName("ul2")[0];
 
-    var botaoLimpar = document.querySelector("#limpa");
+    var sLista1 = document.querySelector("ul1");
+    var sLista2 = document.querySelector("ul2");
+    
     var liTotal = document.getElementById("total");
     var liAdulto = document.getElementById("tAdulto");
     var liEstudante = document.getElementById("tEstudante");
+    var bEditar = document.getElementById("btnEdit");
     
+    var itens = lista1.getElementsByTagName('li');
+    var itens2 = lista2.getElementsByTagName('li')
+    var nome = document.forms.excurcao.nome.value;
+    var idade = Number(document.forms.excurcao.idade.value);
+        //bEdita.focus;
+    
+
+
+    sLista1.addEventListener("click", selecItem);
+    sLista2.addEventListener("click", selecItem);
     liAdulto.textContent = lista1.children.length;
     liEstudante.textContent = lista2.children.length;
     liTotal.textContent = lista1.childElementCount + lista2.childElementCount;
     
 
-    var itens = lista1.getElementsByTagName('li');
-    var i = Number(lista1.childElementCount);
+
+   // var i = Number(lista1.childElementCount);
     document.forms.excurcao.addEventListener("submit", enviar);
+    bEditar.addEventListener("click", editItem);
 
     function enviar(e){
         e.preventDefault();
@@ -74,11 +85,87 @@
             liEstudante.textContent = lista2.children.length; 
         }
 
+
         liTotal.textContent = lista1.childElementCount + lista2.childElementCount;
         document.forms.excurcao.reset();
         document.forms.excurcao.nome.focus();
-        
+        bEditar.disabled = true;
     }
+
+   var itemC;
+    function selecItem(e2){
+
+        var i;
+        for (i = 0; i < lista1.children.length; i++) {
+            itens[i].style.color = "black";
+        }
+        
+        for (i = 0; i < lista2.children.length; i++) {
+            itens2[i].style.color = "black";
+        }
+
+       
+        console.log("Item selecionado: ", e2.srcElement.textContent);
+        e2.srcElement.style.color = "red";
+        //console.log(e2.target.);
+        var iNome = e2.srcElement.textContent.slice(1);
+        var fIdade = e2.srcElement.textContent.slice(2);
+        console.log(iNome);
+        console.log(fIdade);
+        document.forms.excurcao.nome.value = fIdade;
+
+        addEventListener("click", itemC = e2);
+
+        document.forms.excurcao.nome.focus();
+        bEditar.disabled = false;
+    }
+
+    //function criaOuvinte(n) {
+   //     return 
+   // }
+
+//itens2.querySelector
+
+    function editItem(itemC) {
+
+            console.log("Item editar", itemC.srcElement.textContent);
+
+    }
+
+
+
+
+
+           // lista1.parentElement.style.color = "green";
+       // lista2.style.color = "green";
+               //lista2.appendChild(bEdit);
+        //e.lista2.appendChild(bEdit);
+    
+    /* function atualizaLista() {
+       
+        for (var i = 0; i < itens.length; i++) {
+            var nLi = document.createElement("li");
+            var sName = document.createElement("span");
+            sName.textContent = itens[i].name;
+            //var bDelete = document.createElement("button");
+           // bDelete.textContent = "X";
+            nLi.appendChild(sName);
+            nLi.appendChild(bDelete);
+            lista.appendChild(nLi);
+            nLi.addEventListener("click", criaOuvinte(i));
+        }
+    }
+
+    function criaOuvinte(n) {
+        return function (e) {
+            console.log(e);
+            console.log("i: ", n);
+           // itens.splice(n, 1);
+            atualizaLista();
+            console.log(e.srcElement.parentNode);
+        }
+    } */
+
 
 
             
