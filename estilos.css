@@ -1,0 +1,49 @@
+h1{
+    align-content:center;
+}
+
+table {
+  border-collapse: collapse;
+  width: 50%;
+}
+
+th, td {
+  text-align: center;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #e7f3f0;
+}
+
+.div1 {
+  width: 300px;
+  height: 300px;  
+  padding: 50px;
+  border: 2px solid gray;
+  margin: 10px
+  
+}
+
+input[type=text]  {
+  width: 100%;
+  padding: 5px 20px;
+  margin: 2px 0;
+  box-sizing: border-box;
+}
+input[type=number]  {
+  width: 30%;
+  padding: 5px 10px;
+  margin: 3px 0;
+  box-sizing: border-box;
+  
+}
+input[type=submit]  {
+  width: 50%;
+  padding: 5px 20px;
+  margin: 4px 0;
+  box-sizing: border-box;
+  align-content: center;
+  
+ 
+}

@@ -11,7 +11,7 @@
     <label> Idade: <input type="number"  name="idade" /></label><br><br>
     
     <input type="submit" />
-    <button type="button" title="Editar" id=btnEdit disabled = "true"> Editar</button>
+    <button type="button" title="Editar" id=btnExcluir disabled = "true"> Excluir</button>
 </form>
 <br>
 
@@ -31,23 +31,32 @@
 <script>
 
     // Declaração das Variáveis //
-    var listaNomes= [];
+
+    var listaNomes = [];
+    var slNome = document.createElement("span");
+    var slIdade = document.createElement("span");
+    var novoLi 
+    //= document.createElement("li");
+    
     var lista1 = document.getElementsByTagName("ul1")[0];
     var lista2 = document.getElementsByTagName("ul2")[0];
+
+    
 
     var sLista1 = document.querySelector("ul1");
     var sLista2 = document.querySelector("ul2");
     
+    
     var liTotal = document.getElementById("total");
     var liAdulto = document.getElementById("tAdulto");
     var liEstudante = document.getElementById("tEstudante");
-    var bEditar = document.getElementById("btnEdit");
+    var bEditar = document.getElementById("btnExcluir");
     
     var itens = lista1.getElementsByTagName('li');
     var itens2 = lista2.getElementsByTagName('li')
     var nome = document.forms.excurcao.nome.value;
     var idade = Number(document.forms.excurcao.idade.value);
-        //bEdita.focus;
+       
     
 
 
@@ -57,11 +66,11 @@
     liEstudante.textContent = lista2.children.length;
     liTotal.textContent = lista1.childElementCount + lista2.childElementCount;
     
-
+  
 
    // var i = Number(lista1.childElementCount);
     document.forms.excurcao.addEventListener("submit", enviar);
-    bEditar.addEventListener("click", editItem);
+   // bEditar.addEventListener("click", editItem);
 
     function enviar(e){
         e.preventDefault();
@@ -74,15 +83,35 @@
         var novaLista = { "nome": nome, "idade": idade };
         listaNomes.push(novaLista);
 
-        var novoLi = document.createElement("li");
+
+        novoLi = document.createElement("li");
         novoLi.textContent = novaLista.nome + " - " + novaLista.idade;
+
+
+        novoLi.appendChild(slNome);
+        novoLi.appendChild(slIdade);
+
+        sLista1.appendChild(novoLi);
+        sLista2.appendChild(novoLi);
+        //novoLi.addEventListener("click", criaOuvinte(i));
+
+
+       //novoLi.appendChild(slNome);
+       // novoLi.appendChild(slIdade);
+
+       for (i = 0; i < listaNomes.length; i++) {
+            slNome.textContent = listaNomes[i].nome;
+            slIdade.textContent = listaNomes[i].idade;
+        }
 
         if(idade >= 18){
             lista1.appendChild(novoLi);
             liAdulto.textContent = lista1.children.length;
+            
         }else{
             lista2.appendChild(novoLi);
-            liEstudante.textContent = lista2.children.length; 
+            liEstudante.textContent = lista2.children.length;
+            
         }
 
 
@@ -92,7 +121,8 @@
         bEditar.disabled = true;
     }
 
-   var itemC;
+   
+
     function selecItem(e2){
 
         var i;
@@ -103,37 +133,46 @@
         for (i = 0; i < lista2.children.length; i++) {
             itens2[i].style.color = "black";
         }
+        
+        
+        
+       // novoLi.appendChild(sLista2);
+       
+        console.log("Item selecionado: ", slNome, slIdade);
+        e2.srcElement.style.color = "red";
+        //console.log("Item a excluir: ", e2.target.textContent);
+        
+       // addEventListener("click", excluiItem(e2));
+       // console.log("Excluir: ", sLista2(e2.srcElement));
+
 
        
-        console.log("Item selecionado: ", e2.srcElement.textContent);
-        e2.srcElement.style.color = "red";
-        //console.log(e2.target.);
-        var iNome = e2.srcElement.textContent.slice(1);
-        var fIdade = e2.srcElement.textContent.slice(2);
-        console.log(iNome);
-        console.log(fIdade);
-        document.forms.excurcao.nome.value = fIdade;
-
-        addEventListener("click", itemC = e2);
-
         document.forms.excurcao.nome.focus();
         bEditar.disabled = false;
-    }
-
-    //function criaOuvinte(n) {
-   //     return 
-   // }
-
-//itens2.querySelector
-
-    function editItem(itemC) {
-
-            console.log("Item editar", itemC.srcElement.textContent);
-
+        
     }
 
 
+    function excluiItem(n) {
 
+       
+
+    
+       
+       // console.log("Elemento: ", listaNomes);
+       // console.log(n.path); 
+       // console.log("Elemento selecionado",n.path[0]);
+       
+        
+
+    }
+
+
+        /* var iNome = e2.srcElement.textContent.slice(1);
+         var fIdade = e2.srcElement.textContent.slice(2);
+         console.log(iNome);
+         console.log(fIdade);
+         document.forms.excurcao.nome.value = fIdade;*/
 
 
            // lista1.parentElement.style.color = "green";
@@ -141,30 +180,44 @@
                //lista2.appendChild(bEdit);
         //e.lista2.appendChild(bEdit);
     
-    /* function atualizaLista() {
-       
-        for (var i = 0; i < itens.length; i++) {
-            var nLi = document.createElement("li");
-            var sName = document.createElement("span");
-            sName.textContent = itens[i].name;
-            //var bDelete = document.createElement("button");
-           // bDelete.textContent = "X";
-            nLi.appendChild(sName);
-            nLi.appendChild(bDelete);
-            lista.appendChild(nLi);
-            nLi.addEventListener("click", criaOuvinte(i));
-        }
-    }
+    /*atualizaLista();
 
-    function criaOuvinte(n) {
-        return function (e) {
-            console.log(e);
-            console.log("i: ", n);
-           // itens.splice(n, 1);
-            atualizaLista();
-            console.log(e.srcElement.parentNode);
+        function atualizaLista() {
+            //lista1.innerHTML = "";
+            for (var i = 0; i < itens.length; i++) {
+                var nLi = document.createElement("li");
+                var sName = document.createElement("span");
+                sName.textContent = itens[i].name;
+
+                nLi.appendChild(sName);
+
+                lista1.appendChild(nLi);
+                nLi.addEventListener("click", criaOuvinte(i));
+            }
+
+            //lista2.innerHTML = "";
+            for (var i = 0; i < itens2.length; i++) {
+                var nLi2 = document.createElement("li");
+                var sName2 = document.createElement("span");
+                sName2.textContent = itens2[i].name;
+
+                nLi2.appendChild(sName2);
+
+                lista2.appendChild(nLi2);
+                nLi2.addEventListener("click", criaOuvinte(i));
+            }
+
         }
-    } */
+
+        function criaOuvinte(n) {
+            return function (e) {
+                console.log(e);
+                console.log("i: ", n);
+                //itens.splice(n, 1);
+                atualizaLista();
+                console.log(e.srcElement.parentNode);
+            }
+        }*/
 
 
 
