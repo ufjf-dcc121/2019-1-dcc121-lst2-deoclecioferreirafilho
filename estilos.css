@@ -1,19 +1,44 @@
-h1{
-    align-content:center;
+h2{
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  font-size: 25px
 }
 
-table {
+
+
+#dados {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 50%;
 }
 
-th, td {
-  text-align: center;
+#dados td, #dados th {
+  border: 1px solid #ddd;
   padding: 8px;
+  text-align: center;
 }
 
-tr:nth-child(even) {
-  background-color: #e7f3f0;
+#dados tr:nth-child(even){
+  background-color: #f2f2f2;
+}
+
+#dados tr:hover {
+  background-color: #ddd;
+}
+
+#dados th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: rgb(99, 163, 179);
+  color: white;
+}
+
+#dados tr.media {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: rgb(246, 247, 195);
+  color: rgb(12, 11, 11);
 }
 
 .div1 {
@@ -22,8 +47,8 @@ tr:nth-child(even) {
   padding: 50px;
   border: 2px solid gray;
   margin: 10px
-  
 }
+
 
 input[type=text]  {
   width: 100%;
@@ -46,4 +71,17 @@ input[type=submit]  {
   align-content: center;
   
  
+}
+p {
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+ol {
+  list-style-type: upper-roman;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  font-size: 20px
 }

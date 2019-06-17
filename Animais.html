@@ -5,52 +5,234 @@
     <title>Animais</title>
     <link rel="stylesheet" href="estilos.css" />
 </head>
+
 <body>
-    <h1>Curiosidade e Características dos Animais</h1>
+    <h2>Curiosidade e Características dos Animais</h2>
+    <br>
+    <div class="div1">
+
+        <form name="formAnimal" method="POST">
+            <label for="animal"> Animal</label> <br>
+            <input type="text" placeholder="Digite o tipo de animal" name="animal"><br>
+            <label for="altura"> Altura</label> <br>
+            <input type="number" placeholder="m" name="altura" /><label> m</label><br>
+            <label for="peso"> Peso</label><br>
+            <input type="number" placeholder="kg" name="peso" /><label> kg</label><br>
+            <label for="velocidade"> Velocidade</label><br>
+            <input type="number" placeholder="km/h" name="velocidade" /><label> km/h</label></label><br>
+            <label for=idade> Idade Máxima</label> <br>
+            <input type="number" placeholder="anos" name="idadeMax" /><label> anos</label><br><br>
+            <input type="submit" />
+        </form>
+
+    </div>
 <br>
-<div class="div1">
-<form name = "animal" method = "POST" >
-<label for= "nome"> Animal</label> <br>
-<input type="text" placeholder="Digite o tipo de animal" name="nome"><br>
-<label for = "altura"> Altura</label> <br>
-<input type="number" placeholder="m"name="altura" /><label> m</label><br>
-<label for = "peso"> Peso</label><br>
-<input type="number" placeholder="kgl" name="peso" /><label> kg</label><br>
-<label for = "velocidade"> Velocidade</label><br> 
-<input type="number" placeholder="km/h" name="velocidade" /><label> km/h</label></label><br>
-<label for = idade> Idade máxima</label> <br>
-<input type="number" placeholder="anos" name="idade" /><label> anos</label><br><br>
-<input type="submit" />
+<h2> <span id = "vazio"></h2>
+<br><br>
 
+<div class="div2">
+    <table id="dados">
+        <thead>
+            <tr>
+                <th>Animal</th>
+                <th>Altura</th>
+                <th>Peso</th>
+                <th>Velocidade</th>
+                <th>Idade Máxima</th>
+            </tr>
+        </thead>
 
+        <tbody>
+            <tr> </tr>
+        </tbody>
 
-</form>
+        <tfoot> 
+            <tr>
+                <td id="fTitulo"></td>
+                <td id="fAlto"> </td>
+                <td id="fPeso"> </td>
+                <td id="fVeloz"> </td>
+                <td id="fIdade"> </td>
+            </tr>
+    </tfoot>
+    </table>
+    <br>
+    
+    <br>
+    <ol> </ol>
+    <br>
+   
+    <h2><span id="acimaPeso"></span></h2>
+
 </div>
+    <script>
+        var lista = document.getElementsByTagName("ol")[0];
+        
+        var tabelaAnimais = [];
+        var tabela = document.getElementsByTagName("ul")[0];
+        var vazio = document.getElementById("vazio");
+        var acimaPeso = document.getElementById("acimaPeso")
 
-<table>
-    <tr>
-        <th>Animal</th>
-        <th>Altura</th>
-        <th>Peso</th>
-        <th>Velocidade</th>
-        <th>Idade</th>
-    </tr>
+        var fTitulo = document.getElementById("fTitulo");
+        var fAlto = document.getElementById("fAlto");
+        var fPeso = document.getElementById("fPeso");
+        var fVeloz = document.getElementById("fVeloz");
+        var fIdade = document.getElementById("fIdade");
 
-    <tr>
-        <td>vaca</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+        var formAnimais = document.forms.formAnimal;
+        formAnimais.addEventListener("submit", processaCadastro);
+        var corpoTabela = document.querySelector("tbody");
+       // var footTabela = document.querySelector("tfoot");
+       
 
-    <tr>
-        <td>Médias</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-</table>
+        function processaCadastro(e) {
+
+            e.preventDefault();
+            var animal = formAnimais.animal.value;
+            var altura = Number(formAnimais.altura.value);
+            var peso = Number(formAnimais.peso.value);
+            var velocidade = Number(formAnimais.velocidade.value);
+            var idadeMax = Number(formAnimais.idadeMax.value);
+            console.log(animal, altura, peso, velocidade, idadeMax)
+
+            if (animal != "") {
+
+                var novoAnimal = { "animal": animal, "altura": altura, "peso": peso, "velocidade": velocidade, "idadeMax": idadeMax };
+                tabelaAnimais.push(novoAnimal);
+                jogaLinhaNaTabela(animal, altura, peso, velocidade, idadeMax);
+                
+                calculaMaior();
+                calculaMedia();
+            }else{
+                vazio.textContent = " Digite um animal!!!";
+            }
+
+            formAnimais.reset();
+            formAnimais.animal.focus();
+        }
+
+        function jogaLinhaNaTabela(animal, altura, peso, velocidade, idadeMax) {
+            var tdAnimal = document.createElement("td");
+            tdAnimal.textContent = animal;
+            var tdAltura = document.createElement("td");
+            tdAltura.textContent = altura;
+            var tdPeso = document.createElement("td");
+            tdPeso.textContent = peso;
+            var tdVelocidade = document.createElement("td");
+            tdVelocidade.textContent = velocidade;
+            var tdIdade = document.createElement("td");
+            tdIdade.textContent = idadeMax;
+
+            var trLinha = document.createElement("tr");
+            trLinha.appendChild(tdAnimal);
+            trLinha.appendChild(tdAltura);
+            trLinha.appendChild(tdPeso);
+            trLinha.appendChild(tdVelocidade);
+            trLinha.appendChild(tdIdade);
+
+            corpoTabela.appendChild(trLinha);
+        }
+
+        function calculaMaior() {
+            var i;
+            if (tabelaAnimais.length == 0) {
+                vazio.textContent = " Não há dados para Calcular!";
+            }
+            else {
+                lista.innerText = "";
+                vazio.textContent = "";
+                var tAnimal = tabelaAnimais[0];
+                var sAltura = tAnimal.animal;
+                var sPeso = tAnimal.animal;
+                var sVeloz = tAnimal.animal;
+                var sIdMax = tAnimal.animal;
+                
+
+
+                for (var i = 1; i < tabelaAnimais.length; i++) {
+                    var aux = tabelaAnimais[i];
+                    if (aux.altura > tAnimal.altura) {
+                        sAltura = aux.animal;
+                    }
+                    if (aux.peso > tAnimal.peso) {
+                        sPeso = aux.animal;
+                    }
+                    if (aux.velocidade > tAnimal.velocidade) {
+                        sVeloz = aux.animal;
+                    }
+                    if (aux.idadeMax > tAnimal.idadeMax) {
+                        sIdMax = aux.animal;
+                    }
+                    
+                    
+                }
+                 
+                   var itens = [
+                    { nome: "O " + sAltura + " é o mais ALTO" },
+                    { nome: "O " + sPeso + " é o mais PESADO" },
+                    { nome: "O " + sVeloz + " é o mais VELOZ" },
+                    { nome: "O " + sIdMax + " é o mais LONGEVO" }
+                ];
+
+               
+                for (var i = 0; i < itens.length; i++) {
+                    var novoLi = document.createElement("li");
+                    var sName = document.createElement("span");
+                    sName.textContent = itens[i].nome;
+                    novoLi.appendChild(sName);
+                    lista.appendChild(novoLi);
+                    console.log(sName);
+
+                } 
+ 
+            }
+        }
+
+        function calculaMedia(){
+
+           // footTabela = 0;
+            var totalAltura = 0;
+            var totalPeso = 0;
+            var totalVelocidade = 0;
+            var totalIdadeMax = 0;
+
+            for(var i = 0 ; i < tabelaAnimais.length; i++){
+                
+                totalAltura += Number(tabelaAnimais[i].altura);
+                totalPeso += Number(tabelaAnimais[i].peso);
+                totalVelocidade += Number(tabelaAnimais[i].velocidade);
+                totalIdadeMax += Number(tabelaAnimais[i].idadeMax);
+            }
+            var num = Number(tabelaAnimais.length);          
+            var mAltura = Number(totalAltura) / num;
+            var mPeso = Number(totalPeso) / num;
+            var mVelocidade = Number(totalVelocidade) / num;
+            var mIdadeMax = Number(totalIdadeMax) / num;
+            console.log(totalAltura,totalPeso,totalVelocidade,totalIdadeMax);
+            console.log(mAltura, mPeso, mVelocidade, mIdadeMax);
+
+            for(var i = 0; i < tabelaAnimais.length; i++){
+                var contator = 0;
+                if( Number(tabelaAnimais[i].peso) > mPeso){
+                    contator++;
+                }
+            }
+
+            if(contator > 0){
+                acimaPeso.textContent = "Acima da média de PESO: " + contator + ".";
+            }
+
+            fTitulo.textContent = "Média";
+            fAlto.textContent = Number(mAltura);
+            fPeso.textContent = mPeso;
+            fVeloz.textContent = mVelocidade;
+            fIdade.textContent = mIdadeMax;
+
+        }
+
+
+    </script>
+
 </body>
+
 </html>
