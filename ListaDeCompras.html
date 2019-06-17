@@ -4,22 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="estilos.css" />
     <title>Lista de Compras</title>
 </head>
 
 <body>
     <h1>Lista de Compras</h1>
-
+<div class="div2">
     <form name="listaCompra" method="POST">
-        <input type="number" name="quantidade" />
-        <input type="text" name="item">
+        <label for="quantidade"> Quantidade</label> <br>
+        <input type="number" name="quantidade" /><br><br>
+        <label for="item"> Item</label> <br>
+        <input type="text" name="item"><br><br>
         <input type="submit" />
+        
+        <hi>Itens: <span id="total"></span></hi>
 
     </form>
-    <br>
     <button id=Btnlimpar>Limpa a lista</button>
-    <hi>Itens: <span id="total"></span></hi>
-
+   
+   
+    
+</div>
     <ul>
 
     </ul>
@@ -56,13 +62,14 @@
             liTotal.textContent = lista.children.length;
             document.forms.listaCompra.reset();
             document.forms.listaCompra.quantidade.focus();
+            console.log(lista.childElementCount);
 
         }
 
         function limpaLista() {
 
             i = Number(lista.childElementCount);
-
+            
             while (i > 0) {
                 lista.removeChild(itens[0]);
                 i--;

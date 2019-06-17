@@ -3,30 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Excurção</title>
+    <link rel="stylesheet" href="estilos.css" />
 </head>
 <body>
 <br><br>
+<div class="div2">
 <form name="excurcao"  method="POST">
-    <label> Nome:  <input type="text"  name="nome"></label><br><br>
-    <label> Idade: <input type="number"  name="idade" /></label><br><br>
+    <label> Nome: </label><br>
+    <input type="text" placeholder="Digite o nome" name="nome"><br><br>
+    <label> Idade:</label><br>
+    <input type="number" placeholder="Idade" name="idade" /><br><br>
     
     <input type="submit" />
     <button type="button" title="Editar" id=btnExcluir disabled = "true"> Excluir</button>
 </form>
+</div>
 <br>
 
         
 <!--Listas-->
-
-<h3><b>Adulto - <span id="tAdulto"></span></b></h3>
+<div class="div2">
+<h3>Adulto -  <span id="tAdulto"> </span> (maiores de 18 anos)</h3>
 <ul1>
 </ul1>
 <br><br>
-<h3><b>Estudante - <span id="tEstudante"></span></b></h3>
+<h3>Estudante - <span id="tEstudante"></span></h3>
 <ul2>
 </ul2>
 <br>
-<h3><b>Total inscritos: <span id="total"> </span></b></h3>
+<h3>Total inscritos: <span id="total"> </span></h3>
+</div>
 
 <script>
 
@@ -65,10 +71,7 @@
     liAdulto.textContent = lista1.children.length;
     liEstudante.textContent = lista2.children.length;
     liTotal.textContent = lista1.childElementCount + lista2.childElementCount;
-    
-  
-
-   // var i = Number(lista1.childElementCount);
+      
     document.forms.excurcao.addEventListener("submit", enviar);
    // bEditar.addEventListener("click", editItem);
 
@@ -88,16 +91,6 @@
         novoLi.textContent = novaLista.nome + " - " + novaLista.idade;
 
 
-        novoLi.appendChild(slNome);
-        novoLi.appendChild(slIdade);
-
-        sLista1.appendChild(novoLi);
-        sLista2.appendChild(novoLi);
-        //novoLi.addEventListener("click", criaOuvinte(i));
-
-
-       //novoLi.appendChild(slNome);
-       // novoLi.appendChild(slIdade);
 
        for (i = 0; i < listaNomes.length; i++) {
             slNome.textContent = listaNomes[i].nome;
@@ -133,13 +126,12 @@
         for (i = 0; i < lista2.children.length; i++) {
             itens2[i].style.color = "black";
         }
-        
-        
-        
-       // novoLi.appendChild(sLista2);
-       
+     
         console.log("Item selecionado: ", slNome, slIdade);
         e2.srcElement.style.color = "red";
+
+        document.forms.excurcao.nome.focus();
+        bEditar.disabled = false;
         //console.log("Item a excluir: ", e2.target.textContent);
         
        // addEventListener("click", excluiItem(e2));
@@ -147,9 +139,8 @@
 
 
        
-        document.forms.excurcao.nome.focus();
-        bEditar.disabled = false;
-        
+
+        // novoLi.appendChild(sLista2);
     }
 
 
@@ -168,61 +159,7 @@
     }
 
 
-        /* var iNome = e2.srcElement.textContent.slice(1);
-         var fIdade = e2.srcElement.textContent.slice(2);
-         console.log(iNome);
-         console.log(fIdade);
-         document.forms.excurcao.nome.value = fIdade;*/
-
-
-           // lista1.parentElement.style.color = "green";
-       // lista2.style.color = "green";
-               //lista2.appendChild(bEdit);
-        //e.lista2.appendChild(bEdit);
-    
-    /*atualizaLista();
-
-        function atualizaLista() {
-            //lista1.innerHTML = "";
-            for (var i = 0; i < itens.length; i++) {
-                var nLi = document.createElement("li");
-                var sName = document.createElement("span");
-                sName.textContent = itens[i].name;
-
-                nLi.appendChild(sName);
-
-                lista1.appendChild(nLi);
-                nLi.addEventListener("click", criaOuvinte(i));
-            }
-
-            //lista2.innerHTML = "";
-            for (var i = 0; i < itens2.length; i++) {
-                var nLi2 = document.createElement("li");
-                var sName2 = document.createElement("span");
-                sName2.textContent = itens2[i].name;
-
-                nLi2.appendChild(sName2);
-
-                lista2.appendChild(nLi2);
-                nLi2.addEventListener("click", criaOuvinte(i));
-            }
-
-        }
-
-        function criaOuvinte(n) {
-            return function (e) {
-                console.log(e);
-                console.log("i: ", n);
-                //itens.splice(n, 1);
-                atualizaLista();
-                console.log(e.srcElement.parentNode);
-            }
-        }*/
-
-
-
-            
-
+        
 </script>
 </body>
 </html>

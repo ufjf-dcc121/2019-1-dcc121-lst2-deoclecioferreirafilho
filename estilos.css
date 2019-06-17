@@ -2,7 +2,9 @@ h2{
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   font-size: 25px
 }
-
+span{
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
 
 
 #dados {
@@ -48,7 +50,21 @@ h2{
   border: 2px solid gray;
   margin: 10px
 }
-
+.div2 {
+  width: 300px;
+  
+  padding: 50px;
+  border: 2px solid gray;
+  margin: 5px
+}
+.div3 {
+  width: 70%;
+  
+    
+  padding: 20px;
+  border: 2px solid gray;
+  margin: 10px
+}
 
 input[type=text]  {
   width: 100%;
@@ -63,14 +79,21 @@ input[type=number]  {
   box-sizing: border-box;
   
 }
-input[type=submit]  {
-  width: 50%;
+input[type=submit],[type="button"]  {
+  width: 40%;
   padding: 5px 20px;
   margin: 4px 0;
   box-sizing: border-box;
   align-content: center;
   
  
+}
+button{
+  width: 40%;
+  padding: 5px 20px;
+  margin: 4px 0;
+  box-sizing: border-box;
+  align-content: center;
 }
 p {
   display: block;
@@ -80,8 +103,13 @@ p {
   margin-right: 0;
 }
 
-ol {
+ol.animal {
   list-style-type: upper-roman;
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   font-size: 20px
+}
+ol.litem {
+  list-style-type: circle;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  font-size: 25px
 }
