@@ -1,165 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Excurção</title>
     <link rel="stylesheet" href="estilos.css" />
-</head>
-<body>
-<br><br>
-<div class="div2">
-<form name="excurcao"  method="POST">
-    <label> Nome: </label><br>
-    <input type="text" placeholder="Digite o nome" name="nome"><br><br>
-    <label> Idade:</label><br>
-    <input type="number" placeholder="Idade" name="idade" /><br><br>
-    
-    <input type="submit" />
-    <button type="button" title="Editar" id=btnExcluir disabled = "true"> Excluir</button>
-</form>
-</div>
-<br>
+  </head>
+  <body>
+    <br /><br />
+    <div class="div2">
+      <form name="excurcao" method="POST">
+        <input type="hidden" name="chave" value="" />
+        <label> Nome: </label><br />
+        <input
+          type="text"
+          placeholder="Digite o nome"
+          name="nome"
+        /><br /><br />
+        <label> Idade:</label><br />
+        <input type="number" placeholder="Idade" name="idade" /><br /><br />
 
-        
-<!--Listas-->
-<div class="div2">
-<h3>Adulto -  <span id="tAdulto"> </span> (maiores de 18 anos)</h3>
-<ul1>
-</ul1>
-<br><br>
-<h3>Estudante - <span id="tEstudante"></span></h3>
-<ul2>
-</ul2>
-<br>
-<h3>Total inscritos: <span id="total"> </span></h3>
-</div>
+        <input type="submit" />
+        <button type="button" title="Excluir" id="btnExcluir" disabled="true">
+          Excluir
+        </button>
+      </form>
+    </div>
+    <br />
 
-<script>
+    <!--Listas-->
+    <div class="div2">
+      <h3>Adulto - <span id="tAdulto"> </span> (maiores de 18 anos)</h3>
+      <ul1> </ul1>
+      <br /><br />
+      <h3>Estudante - <span id="tEstudante"></span></h3>
+      <ul2> </ul2>
+      <br />
+      <h3>Total inscritos: <span id="total"> </span></h3>
+    </div>
 
-    // Declaração das Variáveis //
+    <script>
+      // Declaração das Variáveis //
+      var chave = 1;
+      /*var listaNomes = [
+        { chave: chave++, nome: "Fulano", idade: 23 },
+        { chave: chave++, nome: "Beltrano", idade: 12 }
+      ];
+      */
+     var listaNomes = JSON.parse(localStorage.getItem("banco"))||[];
+      var slNome = document.createElement("span");
+      var slIdade = document.createElement("span");
+      var novoLi;
+      //= document.createElement("li");
 
-    var listaNomes = [];
-    var slNome = document.createElement("span");
-    var slIdade = document.createElement("span");
-    var novoLi 
-    //= document.createElement("li");
-    
-    var lista1 = document.getElementsByTagName("ul1")[0];
-    var lista2 = document.getElementsByTagName("ul2")[0];
+      var lista1 = document.getElementsByTagName("ul1")[0];
+      var lista2 = document.getElementsByTagName("ul2")[0];
 
-    
+      var sLista1 = document.querySelector("ul1");
+      var sLista2 = document.querySelector("ul2");
 
-    var sLista1 = document.querySelector("ul1");
-    var sLista2 = document.querySelector("ul2");
-    
-    
-    var liTotal = document.getElementById("total");
-    var liAdulto = document.getElementById("tAdulto");
-    var liEstudante = document.getElementById("tEstudante");
-    var bEditar = document.getElementById("btnExcluir");
-    
-    var itens = lista1.getElementsByTagName('li');
-    var itens2 = lista2.getElementsByTagName('li')
-    var nome = document.forms.excurcao.nome.value;
-    var idade = Number(document.forms.excurcao.idade.value);
-       
-    
+      var liTotal = document.getElementById("total");
+      var liAdulto = document.getElementById("tAdulto");
+      var liEstudante = document.getElementById("tEstudante");
+      var bExcluir = document.getElementById("btnExcluir");
 
+      var itens = lista1.getElementsByTagName("li");
+      var itens2 = lista2.getElementsByTagName("li");
+      var nome = document.forms.excurcao.nome.value;
+      var idade = Number(document.forms.excurcao.idade.value);
 
-    sLista1.addEventListener("click", selecItem);
-    sLista2.addEventListener("click", selecItem);
-    liAdulto.textContent = lista1.children.length;
-    liEstudante.textContent = lista2.children.length;
-    liTotal.textContent = lista1.childElementCount + lista2.childElementCount;
-      
-    document.forms.excurcao.addEventListener("submit", enviar);
-   // bEditar.addEventListener("click", editItem);
+      //sLista1.addEventListener("click", selecItem);
+      //sLista2.addEventListener("click", selecItem);
+      liAdulto.textContent = lista1.children.length;
+      liEstudante.textContent = lista2.children.length;
+      liTotal.textContent = lista1.childElementCount + lista2.childElementCount;
 
-    function enviar(e){
+      document.forms.excurcao.addEventListener("submit", enviar);
+      bExcluir.addEventListener("click", excluiItem);
+      desenhaListas();
+
+      function enviar(e) {
         e.preventDefault();
         console.log("Formulário enviado!");
-
+        var chave = document.forms.excurcao.chave.value;
         var nome = document.forms.excurcao.nome.value;
         var idade = Number(document.forms.excurcao.idade.value);
         console.log(nome, idade);
 
-        var novaLista = { "nome": nome, "idade": idade };
-        listaNomes.push(novaLista);
-
-
-        novoLi = document.createElement("li");
-        novoLi.textContent = novaLista.nome + " - " + novaLista.idade;
-
-
-
-       for (i = 0; i < listaNomes.length; i++) {
-            slNome.textContent = listaNomes[i].nome;
-            slIdade.textContent = listaNomes[i].idade;
+        if (chave) {
+          for (var i = 0; i < listaNomes.length; i++) {
+            if (listaNomes[i].chave === chave) {
+              listaNomes[i].nome = nome;
+              listaNomes[i].idade = idade;
+              document.forms.excurcao.chave.value = "";
+            }
+          }
+        } else {
+          var novaPessoa = { chave: chave++, nome: nome, idade: idade };
+          listaNomes.push(novaPessoa);
         }
+        desenhaListas();
+        localStorage.setItem('banco', JSON.stringify(listaNomes));
 
-        if(idade >= 18){
-            lista1.appendChild(novoLi);
-            liAdulto.textContent = lista1.children.length;
-            
-        }else{
-            lista2.appendChild(novoLi);
-            liEstudante.textContent = lista2.children.length;
-            
-        }
-
-
-        liTotal.textContent = lista1.childElementCount + lista2.childElementCount;
         document.forms.excurcao.reset();
         document.forms.excurcao.nome.focus();
-        bEditar.disabled = true;
-    }
+        bExcluir.disabled = true;
+      }
 
-   
+      function desenhaListas() {
+        lista1.innerHTML = "";
+        lista2.innerHTML = "";
+        for (var i = 0; i < listaNomes.length; i++) {
+          var pessoa = listaNomes[i];
+          var novoLi = document.createElement("li");
+          novoLi.textContent = pessoa.nome + " - " + pessoa.idade;
+          novoLi.addEventListener("click", criaOuvinte(pessoa));
+          if (pessoa.chave === Number(document.forms.excurcao.chave.value)) {
+            novoLi.classList.toggle("selecionado");
+          }
+          if (pessoa.idade < 18) {
+            lista2.appendChild(novoLi);
+          } else {
+            lista1.appendChild(novoLi);
+          }
+        }
 
-    function selecItem(e2){
+        liTotal.textContent = listaNomes.length;
+      }
 
+      function selecItem(e2) {
         var i;
         for (i = 0; i < lista1.children.length; i++) {
-            itens[i].style.color = "black";
+          itens[i].style.color = "black";
         }
-        
+
         for (i = 0; i < lista2.children.length; i++) {
-            itens2[i].style.color = "black";
+          itens2[i].style.color = "black";
         }
-     
+
         console.log("Item selecionado: ", slNome, slIdade);
         e2.srcElement.style.color = "red";
 
         document.forms.excurcao.nome.focus();
-        bEditar.disabled = false;
+        bExcluir.disabled = false;
         //console.log("Item a excluir: ", e2.target.textContent);
-        
-       // addEventListener("click", excluiItem(e2));
-       // console.log("Excluir: ", sLista2(e2.srcElement));
 
-
-       
+        // addEventListener("click", excluiItem(e2));
+        // console.log("Excluir: ", sLista2(e2.srcElement));
 
         // novoLi.appendChild(sLista2);
-    }
+      }
 
+      function excluiItem() {
+        var chave = document.forms.excurcao.chave.value;
+        for (var i = 0; i < listaNomes.length; i++) {
+          if (listaNomes[i].chave == chave) {
+            listaNomes.splice(i,1);
+            document.forms.excurcao.reset();
+            bExcluir.disabled = true;
+            desenhaListas();
+        localStorage.setItem('banco', JSON.stringify(listaNomes));
+          }
+        }
 
-    function excluiItem(n) {
+        // console.log("Elemento: ", listaNomes);
+        // console.log(n.path);
+        // console.log("Elemento selecionado",n.path[0]);
+      }
 
-       
-
-    
-       
-       // console.log("Elemento: ", listaNomes);
-       // console.log(n.path); 
-       // console.log("Elemento selecionado",n.path[0]);
-       
-        
-
-    }
-
-
-        
-</script>
-</body>
+      function criaOuvinte(pessoa) {
+        return function(e) {
+          e.target.classList.toggle("selecionado");
+          document.forms.excurcao.chave.value = pessoa.chave;
+          document.forms.excurcao.nome.value = pessoa.nome;
+          document.forms.excurcao.idade.value = pessoa.idade;
+          bExcluir.disabled = false;
+        };
+      }
+    </script>
+  </body>
 </html>
